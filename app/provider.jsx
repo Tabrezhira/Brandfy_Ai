@@ -1,6 +1,7 @@
-"use client";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
 
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "./_components/AppSidebar";
 function provider({children, ...props}) {
   return (
     <NextThemesProvider
@@ -10,7 +11,11 @@ function provider({children, ...props}) {
       disableTransitionOnChange
       {...props}
     >
+      <SidebarProvider>
+        <AppSidebar/>
+       <SidebarTrigger />
       {children}
+      </SidebarProvider>
     </NextThemesProvider>
   );
 }
