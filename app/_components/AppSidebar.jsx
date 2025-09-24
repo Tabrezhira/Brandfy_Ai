@@ -14,6 +14,7 @@ import React from "react";
 import { Moon, Sun } from "lucide-react";
 
 export function AppSidebar() {
+/* The code snippet you provided is a React functional component named `AppSidebar`. */
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => {
