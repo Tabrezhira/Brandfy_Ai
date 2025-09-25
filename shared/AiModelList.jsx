@@ -30,7 +30,7 @@ export default [
   {
     model: 'DeepSeek',
     icon: '/deepseek.png',
-    premium: false,
+    premium: true,
     enable: true,
     subModel: [
       { name: 'DeepSeek R1 0528', premium: true, id: "" },
@@ -40,7 +40,7 @@ export default [
   {
     model: 'Mistral',
     icon: '/mistral.png',
-    premium: false,
+    premium: true,
     enable: true,
     subModel: [
       { name: 'mistral medium 2505', premium: true, id: "" },
@@ -50,7 +50,7 @@ export default [
   {
     model: 'Grok',
     icon: '/grok.png',
-    premium: false,
+    premium: true,
     enable: true,
     subModel: [
       { name: 'grok 3', premium: true, id: "" },
@@ -60,7 +60,7 @@ export default [
   {
     model: 'Cohere',
     icon: '/cohere.png',
-    premium: false,
+    premium: true,
     enable: true,
     subModel: [
       { name: 'cohere command a', premium: false, id: "" },
@@ -70,7 +70,7 @@ export default [
   {
     model: 'Llama',
     icon: '/llama.png',
-    premium: false,
+    premium: true,
     enable: true,
     subModel: [
       { name: 'Llama 4 Scout 17B 16E Instruct', premium: true, id: "" },
