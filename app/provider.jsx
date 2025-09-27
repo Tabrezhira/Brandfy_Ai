@@ -5,12 +5,18 @@ import { AppSidebar } from "./_components/AppSidebar";
 import AppHeader from "./_components/AppHeader";
 import { doc } from "firebase/firestore";
 import {  useUser } from "@clerk/nextjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { db } from "./../config/FirebaseConfig.js";
 import { getDoc, setDoc } from "firebase/firestore";
+import { AiSelectedModelContext } from "@/context/AiSelectedModelContext";
+import { DefaultModel } from "@/shared/AiModels";
+import { UserDetailContext } from "@/context/UserDetailContext";
 
 function provider({children, ...props}) {
   const {user} = useUser();
+  const[aiSelectedModels,setAiSelectedModel]=useState(DefaultModel);
+  const[userDetail,setUserDetail]=useState(null);
+  
 useEffect(() => {
   if(user){
     CreateNewUser();
@@ -23,6 +29,9 @@ useEffect(() => {
       
       if(docSnap.exists()){
         console.log("Existing User");
+        const userInfo =userSnap.data()
+        setAiSelectedModel(userInfo.SelectedModelsPref);
+        setUserDetail(userInfo); // Set user details in context
         return
       }else{
         const userData={
@@ -35,6 +44,7 @@ useEffect(() => {
       }
       await setDoc(userRef,userData);
       console.log("New User Created");
+      setUserDetail(userData); // Set user details in context
       }
       
     }
@@ -46,6 +56,8 @@ useEffect(() => {
       disableTransitionOnChange
       {...props}
     >
+      <UserDetailContext.Provider value={{userDetail,setUserDetail}}>
+      <AiSelectedModelContext.Provider value={{aiSelectedModels,setAiSelectedModel}}>
       <SidebarProvider>
         <AppSidebar/>
       <div className="w-full">
@@ -54,6 +66,8 @@ useEffect(() => {
       </div>
 
       </SidebarProvider>
+      </AiSelectedModelContext.Provider>
+      </UserDetailContext.Provider>
     </NextThemesProvider>
   );
 }
