@@ -16,11 +16,12 @@ function provider({children, ...props}) {
   const {user} = useUser();
   const[aiSelectedModels,setAiSelectedModel]=useState(DefaultModel);
   const[userDetail,setUserDetail]=useState(null);
+  const [messages, setMessages] = useState({});
   
 useEffect(() => {
   if(user){
     CreateNewUser();
-    console.log("here")
+   
   }
 },[user]);
   const CreateNewUser = async() => {
@@ -29,12 +30,11 @@ useEffect(() => {
       const docSnap=await getDoc(userRef);
       
       if(docSnap.exists()){
-        console.log("Existing User");
+
         const userInfo = docSnap.data()
         setAiSelectedModel(userInfo?.SelectedModelsPref);
         setUserDetail(userInfo); // Set user details in context
-        console.log("hi",userInfo?.SelectedModelsPref);
-        console.log("data",aiSelectedModels)
+
         return
       }else{
         const userData={
@@ -60,7 +60,7 @@ useEffect(() => {
       {...props}
     >
       <UserDetailContext.Provider value={{userDetail,setUserDetail}}>
-      <AiSelectedModelContext.Provider value={{aiSelectedModels,setAiSelectedModel}}>
+      <AiSelectedModelContext.Provider value={{aiSelectedModels,setAiSelectedModel,messages, setMessages}}>
       <SidebarProvider>
         <AppSidebar/>
       <div className="w-full">

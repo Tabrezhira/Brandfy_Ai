@@ -20,6 +20,7 @@ import { AiSelectedModelContext } from "@/context/AiSelectedModelContext.js";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/FirebaseConfig.js";
 import { useUser } from "@clerk/nextjs";
+import { DefaultModel } from "@/shared/AiModels.jsx";
 function AiMultiModels() {
   const {user} = useUser();
   const [aiModelList, setAiModelList] = useState(aiModelLists);
@@ -45,9 +46,6 @@ function AiMultiModels() {
       SelectedModelsPref: newSelectedModels
     });
   }
-  aiModelList.map((model) => {
-    console.log("test",aiSelectedModels[model.model]?.modelId)
-  })
 
   return (
     <div className="flex flex-1 h-[75vh] border-b">
@@ -73,7 +71,7 @@ function AiMultiModels() {
   onValueChange={(value) => onselecteValue(model.model, value)}
 >
                   <SelectTrigger className="w-[180px] cursor-pointer">
-                    <SelectValue placeholder={aiSelectedModels[model.model]?.modelId } />
+                    <SelectValue placeholder={aiSelectedModels?.[model.model]?.modelId ?? model.subModel[0]?.id ?? "" } />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup className="px-3">
