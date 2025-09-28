@@ -20,6 +20,7 @@ function provider({children, ...props}) {
 useEffect(() => {
   if(user){
     CreateNewUser();
+    console.log("here")
   }
 },[user]);
   const CreateNewUser = async() => {
@@ -29,9 +30,11 @@ useEffect(() => {
       
       if(docSnap.exists()){
         console.log("Existing User");
-        const userInfo =userSnap.data()
-        setAiSelectedModel(userInfo.SelectedModelsPref);
+        const userInfo = docSnap.data()
+        setAiSelectedModel(userInfo?.SelectedModelsPref);
         setUserDetail(userInfo); // Set user details in context
+        console.log("hi",userInfo?.SelectedModelsPref);
+        console.log("data",aiSelectedModels)
         return
       }else{
         const userData={
@@ -39,11 +42,11 @@ useEffect(() => {
           email:user?.primaryEmailAddress?.emailAddress,
           createdAt: new Date(),
           credits:1000, // Paid User
-          remainingMsg:5, // onnly for Free user
+          remainingMsg:5, // only for Free user
           plan:"free"
       }
       await setDoc(userRef,userData);
-      console.log("New User Created");
+   
       setUserDetail(userData); // Set user details in context
       }
       

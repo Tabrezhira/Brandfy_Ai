@@ -45,6 +45,9 @@ function AiMultiModels() {
       SelectedModelsPref: newSelectedModels
     });
   }
+  aiModelList.map((model) => {
+    console.log("test",aiSelectedModels[model.model]?.modelId)
+  })
 
   return (
     <div className="flex flex-1 h-[75vh] border-b">
@@ -65,7 +68,10 @@ function AiMultiModels() {
               />
                
               {model.enable && (
-                <Select defaultValue={aiSelectedModels[model.model]?.modelId} onValueChange={(value) => onselecteValue(model.model, value)} >
+                <Select
+  value={aiSelectedModels?.[model.model]?.modelId ?? model.subModel[0]?.id ?? ""}
+  onValueChange={(value) => onselecteValue(model.model, value)}
+>
                   <SelectTrigger className="w-[180px] cursor-pointer">
                     <SelectValue placeholder={aiSelectedModels[model.model]?.modelId } />
                   </SelectTrigger>
