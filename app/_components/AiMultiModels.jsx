@@ -31,6 +31,9 @@ function AiMultiModels() {
         item.model === model ? { ...item, enable: value } : item
       )
     );
+    setAiModelList((prev) => ({
+      ...prev, 
+    }))
   };
 
   const onselecteValue = async (model, value) => {
