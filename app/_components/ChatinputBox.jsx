@@ -14,11 +14,11 @@ const handleSend = async () => {
   // 1️⃣ Add user message to all enabled models
   setMessages((prev) => {
     const updated = { ...prev };
-    Object.keys(aiSelectedModels).forEach((modeKey) => {
-      updated[modeKey] = [
+    Object.keys(aiSelectedModels).forEach((modeKey,modelInfo) => {
+      if(modelInfo.enabled) {      updated[modeKey] = [
         ...(updated[modeKey] ?? []),
         { role: "user", content: userInput },
-      ];
+      ];}
     });
     return updated;
   });
@@ -28,7 +28,7 @@ const handleSend = async () => {
 
   // 2️⃣ Fetch response from each enabled model
   Object.entries(aiSelectedModels).forEach(async ([parentModel, modelInfo]) => {
-    if (!modelInfo.modelId) return;
+    if (!modelInfo.modelId || aiSelectedModels[parentModel].enabled==false) return;
 
     // Add loading placeholder before API call
     setMessages((prev) => ({
@@ -100,7 +100,7 @@ useEffect(() => {
         <div className='fixed bottom-0 left-0 w-full  flex justify-center px-4 pb-4'>
             <div className='w-full border rounded-xl shadow-md max-w-2xl p-4' >
                 <input type="text" placeholder='Ask me anything...' className=' w-full border-0 outline-none'
-                    onChange={(event)=>setUserInput(event.target.value)}
+                    value={userInput} onChange={(event)=>setUserInput(event.target.value)}
                 />
                 <div className='mt-3 flex items-center justify-between'>
                     <Button className={""} variant={"ghost"} size={"icon"} >

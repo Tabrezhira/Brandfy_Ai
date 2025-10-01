@@ -11,6 +11,7 @@ import { getDoc, setDoc } from "firebase/firestore";
 import { AiSelectedModelContext } from "@/context/AiSelectedModelContext";
 import { DefaultModel } from "@/shared/AiModels";
 import { UserDetailContext } from "@/context/UserDetailContext";
+import { updateDoc } from "firebase/firestore";
 
 function provider({children, ...props}) {
   const {user} = useUser();
@@ -21,9 +22,23 @@ function provider({children, ...props}) {
 useEffect(() => {
   if(user){
     CreateNewUser();
-   
   }
 },[user]);
+useEffect(() => {
+  if(aiSelectedModels){
+    updateAIModelSelectionPref();
+  }
+},[aiSelectedModels])
+
+const updateAIModelSelectionPref=async()=>{
+        // Update to Firebase Database
+      const docRef = doc(db, "users", user?.primaryEmailAddress?.emailAddress);
+      await updateDoc(docRef, {
+        SelectedModelsPref: aiSelectedModels,
+      });
+}
+
+
   const CreateNewUser = async() => {
     // If user exist?
       const userRef=doc(db,"users",user?.primaryEmailAddress?.emailAddress);
@@ -34,7 +49,7 @@ useEffect(() => {
         const userInfo = docSnap.data()
         setAiSelectedModel(userInfo?.SelectedModelsPref);
         setUserDetail(userInfo); // Set user details in context
-
+        console.log("User data:", userInfo);
         return
       }else{
         const userData={

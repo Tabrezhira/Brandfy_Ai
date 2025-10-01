@@ -41,7 +41,7 @@ export default [
     "premium": true,
     "enable": true,
     "subModel": [
-      { "name": "DeepSeek R1", "premium": true, "id": "DeepSeek-R1" },
+      { "name": "DeepSeek R1", "premium":true, "id": "DeepSeek-R1" },
       { "name": "DeepSeek R1 0528", "premium": true, "id": "DeepSeek-R1-0528" }
     ]
   },
