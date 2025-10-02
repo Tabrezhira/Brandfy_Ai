@@ -49,20 +49,16 @@ function AiMultiModels() {
   }
 
 
-  console.log("Selected Models from Context:", aiSelectedModels);
+ 
   async function onSelectValue(model, value) {
-    console.log("Selected model:", model, "Value:", value);
+   
       const newSelectedModels = {
         ...aiSelectedModels,
         [model]: { modelId: value },
       };
       setAiSelectedModel(newSelectedModels);
 
-      // Update to Firebase Database
-      const docRef = doc(db, "users", user?.primaryEmailAddress?.emailAddress);
-      await updateDoc(docRef, {
-        SelectedModelsPref: newSelectedModels,
-      });
+
     }
 
   return (

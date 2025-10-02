@@ -49,7 +49,6 @@ const updateAIModelSelectionPref=async()=>{
         const userInfo = docSnap.data()
         setAiSelectedModel(userInfo?.SelectedModelsPref);
         setUserDetail(userInfo); // Set user details in context
-        console.log("User data:", userInfo);
         return
       }else{
         const userData={
